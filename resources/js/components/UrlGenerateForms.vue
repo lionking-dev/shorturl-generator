@@ -1,7 +1,7 @@
 <!-- resources/js/components/UrlForms.vue -->
 <template>
     <div class="container mt-5">
-        <h2 class="mb-4">URL Shortener</h2>
+        <h2 class="mb-4">Shorter URL Generater</h2>
         <form @submit.prevent="submitUrl">
             <div class="row">
                 <div class="col-md-6">

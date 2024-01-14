@@ -1,7 +1,6 @@
 <!-- resources/js/App.vue -->
 <template>
     <div>
-        <h2>Vue Component in Laravel</h2>
         <UrlForm @submit-url="submitUrl" :shortenedUrl="shortenedUrl" :id="id"/>
     </div>
 </template>
