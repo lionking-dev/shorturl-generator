@@ -39,7 +39,6 @@ export default {
     data() {
         return {
             originalUrl: "",
-            // shortenedUrl: null,
         };
     },
     methods: {
@@ -48,19 +47,14 @@ export default {
                 const response = await axios.post("/api/check-url", {
                     originalUrl: this.originalUrl,
                 });
-                this.$emit("submit-url", this.originalUrl);
-                // Handle the response from the backend
-                if (response.data.isSafe) {
-                    // URL is safe, continue with URL shortening logic
+                if (response.data.length == 0) {
                     this.$emit("submit-url", this.originalUrl);
                 } else {
-                    // URL is not safe, handle accordingly (e.g., show a warning)
                     alert("The provided URL is not safe.");
                 }
             } catch(error){
                 console.error('Error: ', error.message);
             }
-            // this.shortenedUrl = "example.com/abc123";
         },
     },
 };

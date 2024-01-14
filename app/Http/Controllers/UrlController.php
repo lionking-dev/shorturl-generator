@@ -24,11 +24,7 @@ class UrlController extends Controller
 
         // Perform Google Safe Browsing check
         $result = $this->googleSafeBrowsingService->checkUrl($url);
-        // Handle the result as needed
         return response()->json($result);
-        /* $isSafe = true;
-
-        return response()->json(['isSafe' => $isSafe]); */
     }
     public function submit(Request $request) {
         $originalUrl = $request->input('originalUrl');
@@ -38,7 +34,12 @@ class UrlController extends Controller
         $data = $request->all();
         $data['originalUrl'] = $originalUrl;
         $url = explode("/", $originalUrl);
-        $data['shortenedUrl'] = $url[0].'//'.$url[2].'/'.(Str::random(6));
+        if(count($url) > 4){
+            $data['shortenedUrl'] = implode('/', array_slice($url, 0, 4));
+        }else{
+            $data['shortenedUrl'] = implode('/', array_slice($url, 0, 3));
+        }
+        $data['shortenedUrl'] = $data['shortenedUrl'].'/'.(Str::random(6));
         $existingUrl = Url::where('shortenedUrl', $data['shortenedUrl'])->first();
 
         if ($existingUrl) {
@@ -52,10 +53,8 @@ class UrlController extends Controller
         $result = Url::find($id);
         echo $result;
         if ($result) {
-            // Redirect to the original URL
             return Redirect::away($result->originalUrl);
         } else {
-            // Handle not found (you can return a 404 view or perform another action)
             abort(404, 'URL not found');
         }
     }
